@@ -58,6 +58,7 @@ function WeddingAppContent() {
 
   return (
     <div className="min-h-screen bg-[#fdfaf5] text-[#2d2d2d] flex flex-col font-sans selection:bg-[#6b1d1d] selection:text-[#ffffff]">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       {/* Top Header with Couple Info & Quick Actions */}
       <Header
         onOpenSettings={() => setIsSettingsOpen(true)}
@@ -68,7 +69,7 @@ function WeddingAppContent() {
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 pt-3.5 pb-12 flex-1 w-full">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-6 pt-3.5 pb-12 flex-1 w-full">
         {activeTab === 'timeline' && <EventTimelineBar />}
 
         {activeTab === 'todo' && (

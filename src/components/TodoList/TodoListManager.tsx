@@ -449,6 +449,7 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                   <div className="flex items-center gap-2.5 min-w-0">
                     <button
                       type="button"
+                      aria-label={isCollapsed ? `Expand ${event.name}` : `Collapse ${event.name}`}
                       className="text-stone-400 hover:text-stone-600 p-0.5"
                     >
                       {isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
@@ -539,6 +540,7 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                             <div className="flex items-start gap-3 flex-1 min-w-0 pr-3">
                               <button
                                 type="button"
+                                aria-label={`${task.completed ? 'Mark incomplete' : 'Mark complete'}: ${task.title}`}
                                 onClick={() => toggleTaskCompleted(task.id)}
                                 className="mt-0.5 text-stone-400 hover:text-stone-700 transition shrink-0"
                               >
@@ -648,7 +650,7 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                 className="flex items-center justify-between px-4 py-3 bg-stone-100/70 hover:bg-stone-100 cursor-pointer select-none border-b border-stone-200"
               >
                 <div className="flex items-center gap-2.5">
-                  <button type="button" className="text-stone-400 hover:text-stone-600 p-0.5">
+                  <button type="button" aria-label={collapsedEvents['general'] ? 'Expand general tasks' : 'Collapse general tasks'} className="text-stone-400 hover:text-stone-600 p-0.5">
                     {collapsedEvents['general'] ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
                   </button>
                   <div>
@@ -690,6 +692,7 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                         <div className="flex items-start gap-3 flex-1 min-w-0 pr-3">
                           <button
                             type="button"
+                            aria-label={`${task.completed ? 'Mark incomplete' : 'Mark complete'}: ${task.title}`}
                             onClick={() => toggleTaskCompleted(task.id)}
                             className="mt-0.5 text-stone-400 hover:text-stone-700 transition shrink-0"
                           >
@@ -711,6 +714,7 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                         <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition shrink-0">
                           <button
                             type="button"
+                            aria-label={`Edit task: ${task.title}`}
                             onClick={() => onEditTask(task)}
                             className="p-1 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded transition"
                           >
@@ -718,6 +722,7 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                           </button>
                           <button
                             type="button"
+                            aria-label={`Delete task: ${task.title}`}
                             onClick={() => deleteTask(task.id)}
                             className="p-1 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded transition"
                           >

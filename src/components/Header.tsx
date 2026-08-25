@@ -54,9 +54,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSettings, onPrintDossier }
         url: window.location.href,
       }).catch(() => {});
     } else {
-      navigator.clipboard.writeText(window.location.href);
-      setCopiedLink(true);
-      setTimeout(() => setCopiedLink(false), 2500);
+      navigator.clipboard?.writeText(window.location.href).then(() => {
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2500);
+      }).catch(() => {
+        window.prompt('Copy this planner link:', window.location.href);
+      });
     }
   };
 
@@ -169,6 +172,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSettings, onPrintDossier }
             {/* Settings */}
             <button
               onClick={onOpenSettings}
+              aria-label="Open planner settings"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#7a1c1c] hover:bg-[#581212] transition shadow-xs"
             >
               <Settings className="w-3.5 h-3.5" />

@@ -48,12 +48,12 @@ export const Navigation: React.FC<NavigationProps> = ({
   ];
 
   return (
-    <nav className="bg-stone-50/80 backdrop-blur-xs border-b border-stone-200 sticky top-[57px] z-20 font-sans-google">
+    <nav aria-label="Wedding planner sections" className="bg-stone-50/95 backdrop-blur-xs border-b border-stone-200 relative z-20 font-sans-google">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between py-2">
+        <div className="flex items-center justify-between gap-3 py-2">
           
           {/* Clean Segmented Tab Control */}
-          <div className="flex items-center p-1 bg-stone-200/70 rounded-xl space-x-1">
+          <div role="tablist" aria-label="Planner sections" className="flex max-w-full items-center gap-1 overflow-x-auto p-1 bg-stone-200/70 rounded-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -63,7 +63,9 @@ export const Navigation: React.FC<NavigationProps> = ({
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   id={`nav-tab-${tab.id}`}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 ${
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 ${
                     isActive
                       ? 'bg-white text-stone-900 shadow-xs'
                       : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100/60'
