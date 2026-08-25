@@ -26,6 +26,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
   const [assigneeName, setAssigneeName] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [priority, setPriority] = useState<TaskPriority>('medium');
+  const [quantity, setQuantity] = useState('');
   const [estimatedCost, setEstimatedCost] = useState<string>('');
   const [notes, setNotes] = useState('');
   const [completed, setCompleted] = useState(false);
@@ -40,6 +41,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
       setAssigneeName(taskToEdit.assigneeName || '');
       setDueDate(taskToEdit.dueDate || '');
       setPriority(taskToEdit.priority);
+      setQuantity(taskToEdit.quantity || '');
       setEstimatedCost(taskToEdit.estimatedCost ? taskToEdit.estimatedCost.toString() : '');
       setNotes(taskToEdit.notes || '');
       setCompleted(taskToEdit.completed);
@@ -51,6 +53,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
       setAssigneeName('');
       setDueDate('');
       setPriority('medium');
+      setQuantity('');
       setEstimatedCost('');
       setNotes('');
       setCompleted(false);
@@ -77,6 +80,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         assigneeName: assigneeName.trim() || undefined,
         dueDate: dueDate || undefined,
         priority,
+        quantity: quantity.trim() || undefined,
         estimatedCost: isNaN(costNum || 0) ? undefined : costNum,
         notes: notes.trim() || undefined,
         completed,
@@ -91,6 +95,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         assigneeName: assigneeName.trim() || undefined,
         dueDate: dueDate || undefined,
         priority,
+        quantity: quantity.trim() || undefined,
         estimatedCost: isNaN(costNum || 0) ? undefined : costNum,
         notes: notes.trim() || undefined,
         completed,
@@ -233,8 +238,24 @@ export const TaskModal: React.FC<TaskModalProps> = ({
             </div>
           </div>
 
-          {/* Cost & Due Date */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* Quantity, Cost & Assignee */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-stone-800 mb-1">
+                Quantity / प्रमाण
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. 50 Boxes, 5 kg, 2 Sets"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#7a1c1c]/20"
+              />
+              <p className="text-[10px] text-stone-400 mt-1">
+                Units or order quantity
+              </p>
+            </div>
+
             <div>
               <label className="block text-xs font-semibold text-stone-800 mb-1">
                 Estimated Cost (₹)
@@ -262,6 +283,9 @@ export const TaskModal: React.FC<TaskModalProps> = ({
                 onChange={(e) => setAssigneeName(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#7a1c1c]/20"
               />
+              <p className="text-[10px] text-stone-400 mt-1">
+                Person in charge
+              </p>
             </div>
           </div>
 

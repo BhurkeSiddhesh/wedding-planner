@@ -41,17 +41,7 @@ export const ManageEventsModal: React.FC<ManageEventsModalProps> = ({ isOpen, on
   };
 
   const handleDelete = (event: WeddingEventCategory) => {
-    const eventTasksCount = tasks.filter((t) => t.eventId === event.id).length;
-    const eventExpensesCount = expenses.filter((e) => e.eventId === event.id).length;
-
-    let message = `Are you sure you want to remove the ceremony "${event.name}" (${event.marathiName})?`;
-    if (eventTasksCount > 0 || eventExpensesCount > 0) {
-      message += `\n\n${eventTasksCount} task(s) and ${eventExpensesCount} expense(s) under this ceremony will be safely reassigned to "General Wedding Tasks".`;
-    }
-
-    if (window.confirm(message)) {
-      deleteEventCategory(event.id);
-    }
+    deleteEventCategory(event.id);
   };
 
   return (

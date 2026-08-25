@@ -19,7 +19,8 @@ import {
   Layers,
   ArrowRight,
   Settings2,
-  CalendarPlus
+  CalendarPlus,
+  Package
 } from 'lucide-react';
 import { EventModal } from '../Modals/EventModal';
 import { ManageEventsModal } from '../Modals/ManageEventsModal';
@@ -585,6 +586,14 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                                     {task.assignedSide === 'groom' ? '🤵 Groom' : task.assignedSide === 'bride' ? '👰 Bride' : '🤝 Shared'}
                                   </span>
 
+                                  {/* Quantity Badge */}
+                                  {task.quantity && (
+                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-medium bg-amber-50 text-amber-900 border border-amber-200" title="Quantity / Units to purchase or prepare">
+                                      <Package className="w-3 h-3 text-amber-700" />
+                                      <span>{task.quantity}</span>
+                                    </span>
+                                  )}
+
                                   {/* Linked Expense Badge */}
                                   {cost && cost > 0 ? (
                                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -707,6 +716,36 @@ export const TodoListManager: React.FC<TodoListManagerProps> = ({
                               <span className={`text-xs sm:text-sm font-medium ${task.completed ? 'line-through text-stone-400' : 'text-stone-900'}`}>
                                 {task.title}
                               </span>
+                              {task.marathiTitle && (
+                                <span className="text-xs text-stone-400 font-devanagari">
+                                  ({task.marathiTitle})
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center flex-wrap gap-1.5 mt-1 text-[11px]">
+                              <span
+                                className={`px-1.5 py-0.5 rounded font-medium ${
+                                  task.assignedSide === 'groom'
+                                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                                    : task.assignedSide === 'bride'
+                                    ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                                    : 'bg-amber-50 text-amber-800 border border-amber-200'
+                                }`}
+                              >
+                                {task.assignedSide === 'groom' ? '🤵 Groom' : task.assignedSide === 'bride' ? '👰 Bride' : '🤝 Shared'}
+                              </span>
+                              {task.quantity && (
+                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-medium bg-amber-50 text-amber-900 border border-amber-200">
+                                  <Package className="w-3 h-3 text-amber-700" />
+                                  <span>{task.quantity}</span>
+                                </span>
+                              )}
+                              {(task.actualCost || task.estimatedCost) ? (
+                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                  <Receipt className="w-3 h-3 text-emerald-600" />
+                                  <span>{formatINR(task.actualCost || task.estimatedCost || 0)}</span>
+                                </span>
+                              ) : null}
                             </div>
                           </div>
                         </div>

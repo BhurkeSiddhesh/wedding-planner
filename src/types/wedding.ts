@@ -106,6 +106,7 @@ export interface TodoTask {
   completed: boolean;
   completedAt?: string;
   notes?: string;
+  quantity?: string; // e.g. "50 Boxes", "5 kg", "2 Sets", "100 Pheta"
   estimatedCost?: number;
   actualCost?: number;
   linkedExpenseId?: string;
@@ -188,6 +189,11 @@ export interface WeddingProfile {
   groomBudgetCap: number;
   brideBudgetCap: number;
   currency: string;
+  groomEmail?: string;
+  brideEmail?: string;
+  creatorRole?: 'groom' | 'bride';
+  isSetupCompleted?: boolean;
+  partnerInviteCode?: string;
 }
 
 export interface TimelineSlot {

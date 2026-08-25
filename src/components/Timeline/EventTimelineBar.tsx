@@ -393,11 +393,8 @@ export const EventTimelineBar: React.FC = () => {
                       {/* Delete Line */}
                       <button
                         type="button"
-                        onClick={() => {
-                          if (confirm(`Delete "${line.title}" and its ${line.slots.length} slots?`)) {
-                            deleteTimelineLine(line.id);
-                          }
-                        }}
+                        aria-label={`Delete timeline line: ${line.title}`}
+                        onClick={() => deleteTimelineLine(line.id)}
                         className="p-1.5 rounded-lg text-stone-500 hover:text-rose-600 hover:bg-rose-50 transition"
                         title="Delete Timeline Line"
                       >
@@ -420,17 +417,30 @@ export const EventTimelineBar: React.FC = () => {
                   {/* VISUAL SPLIT-CLOCK HORIZONTAL TIMELINE BAR */}
                   <div className="p-3 bg-white">
                     {/* Time Ruler (Hour Markers along top) */}
-                    <div className="relative w-full h-5 mb-1 text-[10px] text-stone-400 select-none overflow-hidden">
-                      {hourTicks.map((tick, idx) => (
-                        <div
-                          key={idx}
-                          className="absolute -translate-x-1/2 flex flex-col items-center"
-                          style={{ left: `${tick.percent}%` }}
-                        >
-                          <span className="font-mono text-[9px] text-stone-500 font-medium">{tick.label}</span>
-                          <div className="w-px h-1.5 bg-stone-300 mt-0.5"></div>
-                        </div>
-                      ))}
+                    <div className="relative w-full h-6 mb-1 text-[10px] text-stone-400 select-none">
+                      {hourTicks.map((tick, idx) => {
+                        // Clamp translation near edges so first and last labels aren't clipped
+                        const isFirst = idx === 0 || tick.percent <= 2;
+                        const isLast = idx === hourTicks.length - 1 || tick.percent >= 98;
+                        const transformClass = isFirst
+                          ? 'translate-x-0 items-start'
+                          : isLast
+                          ? '-translate-x-full items-end'
+                          : '-translate-x-1/2 items-center';
+
+                        return (
+                          <div
+                            key={idx}
+                            className={`absolute flex flex-col pointer-events-none transition-opacity ${transformClass}`}
+                            style={{ left: `${tick.percent}%` }}
+                          >
+                            <span className="font-mono text-[9px] sm:text-[10px] text-stone-600 font-semibold tracking-tight whitespace-nowrap bg-white/80 px-0.5 rounded">
+                              {tick.label}
+                            </span>
+                            <div className="w-px h-2 bg-stone-300 mt-0.5"></div>
+                          </div>
+                        );
+                      })}
                     </div>
 
                     {/* Proportional Split Bar Container */}
@@ -604,11 +614,8 @@ export const EventTimelineBar: React.FC = () => {
                                       </button>
                                       <button
                                         type="button"
-                                        onClick={() => {
-                                          if (confirm(`Remove "${slot.title}" from timeline?`)) {
-                                            deleteTimelineSlot(line.id, slot.id);
-                                          }
-                                        }}
+                                        aria-label={`Delete event slot: ${slot.title}`}
+                                        onClick={() => deleteTimelineSlot(line.id, slot.id)}
                                         className="p-1 rounded text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition"
                                         title="Delete Slot"
                                       >

@@ -96,7 +96,7 @@ export function calculateSlotPosition(
 }
 
 /**
- * Generate hourly tick marks for timeline line
+ * Generate hourly tick marks for timeline line with intelligent step intervals and guaranteed start/end anchors
  */
 export function generateHourTicks(startHour: string, endHour: string): { time24: string; label: string; percent: number }[] {
   const lineStart = timeToMinutes(startHour);
@@ -106,18 +106,37 @@ export function generateHourTicks(startHour: string, endHour: string): { time24:
   const total = lineEnd - lineStart;
   if (total <= 0) return [];
 
-  const ticks: { time24: string; label: string; percent: number }[] = [];
-  const startHourRounded = Math.ceil(lineStart / 60) * 60;
+  // Determine interval step (1 hour if total <= 12 hours, 2 hours if longer)
+  const stepMinutes = total > 12 * 60 ? 120 : 60;
 
-  for (let min = startHourRounded; min <= lineEnd; min += 60) {
-    const percent = ((min - lineStart) / total) * 100;
+  const rawMinutes: number[] = [];
+
+  // Always include exact start time
+  rawMinutes.push(lineStart);
+
+  // Add intermediate step marks
+  const firstStep = Math.ceil((lineStart + 1) / stepMinutes) * stepMinutes;
+  for (let min = firstStep; min < lineEnd; min += stepMinutes) {
+    if (min - lineStart >= 30 && lineEnd - min >= 30) {
+      rawMinutes.push(min);
+    }
+  }
+
+  // Always include exact end time
+  if (lineEnd - lineStart >= 30) {
+    rawMinutes.push(lineEnd);
+  }
+
+  // Deduplicate and sort
+  const uniqueMinutes = Array.from(new Set(rawMinutes)).sort((a, b) => a - b);
+
+  return uniqueMinutes.map((min) => {
+    const percent = Math.min(100, Math.max(0, ((min - lineStart) / total) * 100));
     const time24 = minutesToTime(min);
-    ticks.push({
+    return {
       time24,
       label: formatTime12h(time24),
       percent,
-    });
-  }
-
-  return ticks;
+    };
+  });
 }

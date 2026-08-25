@@ -23,9 +23,4 @@ export const db = firebaseConfigJson.firestoreDatabaseId && firebaseConfigJson.f
 // Initialize Auth
 export const auth = getAuth(app);
 
-// Sign in anonymously to authenticate the session for security rules
-signInAnonymously(auth).catch((err) => {
-  console.warn('Anonymous auth note (proceeding in public mode):', err);
-});
-
 export default app;

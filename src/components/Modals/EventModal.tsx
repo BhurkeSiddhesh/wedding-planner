@@ -98,10 +98,8 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, eventTo
 
   const handleDelete = () => {
     if (!eventToEdit) return;
-    if (window.confirm(`Are you sure you want to remove the ceremony "${eventToEdit.name}"? Tasks associated with it will be preserved under General tasks.`)) {
-      deleteEventCategory(eventToEdit.id);
-      onClose();
-    }
+    deleteEventCategory(eventToEdit.id);
+    onClose();
   };
 
   return (

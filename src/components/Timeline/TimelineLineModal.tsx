@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useWedding } from '../../context/WeddingContext';
 import { TimelineLine, TimelineTheme } from '../../types/wedding';
-import { X, Save, Clock, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { X, Save, Clock, Calendar, MapPin, Sparkles, Trash2 } from 'lucide-react';
 
 interface TimelineLineModalProps {
   isOpen: boolean;
@@ -29,7 +29,7 @@ const PRESET_TIME_RANGES = [
 ];
 
 export const TimelineLineModal: React.FC<TimelineLineModalProps> = ({ isOpen, onClose, lineToEdit }) => {
-  const { addTimelineLine, updateTimelineLine, timelineLines } = useWedding();
+  const { addTimelineLine, updateTimelineLine, deleteTimelineLine, timelineLines } = useWedding();
 
   const [title, setTitle] = useState('');
   const [marathiTitle, setMarathiTitle] = useState('');
@@ -91,6 +91,13 @@ export const TimelineLineModal: React.FC<TimelineLineModalProps> = ({ isOpen, on
     }
 
     onClose();
+  };
+
+  const handleDelete = () => {
+    if (lineToEdit) {
+      deleteTimelineLine(lineToEdit.id);
+      onClose();
+    }
   };
 
   return (
@@ -266,21 +273,37 @@ export const TimelineLineModal: React.FC<TimelineLineModalProps> = ({ isOpen, on
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-200">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-stone-600 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 rounded-lg transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-5 py-2 text-xs font-bold text-white bg-linear-to-r from-[#7a1c1c] to-[#9c2727] hover:from-[#661515] hover:to-[#851e1e] rounded-lg shadow-sm flex items-center gap-1.5 transition"
-            >
-              <Save className="w-3.5 h-3.5" />
-              <span>{lineToEdit ? 'Update Timeline Line' : 'Create Timeline Line'}</span>
-            </button>
+          <div className="flex items-center justify-between gap-3 pt-3 border-t border-stone-200">
+            {lineToEdit ? (
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg transition flex items-center gap-1.5"
+                title="Delete this timeline line and its slots"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete Line</span>
+              </button>
+            ) : (
+              <div />
+            )}
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-xs font-semibold text-stone-600 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 rounded-lg transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 text-xs font-bold text-white bg-linear-to-r from-[#7a1c1c] to-[#9c2727] hover:from-[#661515] hover:to-[#851e1e] rounded-lg shadow-sm flex items-center gap-1.5 transition"
+              >
+                <Save className="w-3.5 h-3.5" />
+                <span>{lineToEdit ? 'Update Timeline Line' : 'Create Timeline Line'}</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>
