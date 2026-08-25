@@ -1,0 +1,6 @@
+{
+  "name": "Marathi Wedding Planner & Expense Manager",
+  "description": "Comprehensive Marathi wedding planner featuring an interactive Event Timeline Split-Clock scheduler, ceremony-based To-Do List, and an Event Expense Tracker with separate Groom, Bride, and 50:50 Shared cost splitting with real-time sync.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

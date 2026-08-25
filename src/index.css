@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #faf8f5;
+    --text-primary: #1f1f1f;
+    --maroon-primary: #7a1c1c;
+    --maroon-dark: #581212;
+    --gold-accent: #c99a2c;
+    --gold-light: #faecd0;
+    --border-color: #e5ded4;
+  }
+
+  body {
+    background-color: #faf8f5;
+    color: #1f1f1f;
+    font-family: "Google Sans", "Product Sans", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom scrollbars for clean lists */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3eee7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d6ccbf;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8ac9c;
+}
+
+.font-sans-google {
+  font-family: "Google Sans", "Product Sans", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+.font-serif-marathi {
+  font-family: "Rozha One", "Cinzel", Georgia, serif;
+}
+
+.font-devanagari {
+  font-family: "Yantramanav", "Google Sans", sans-serif;
+}
